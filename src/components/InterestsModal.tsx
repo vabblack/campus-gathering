@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { usePulse } from '@/contexts/PulseContext';
+import { usePulseContext } from '@/contexts/PulseContext';
 import { 
   BookOpen, Code, Music, Film, 
   Briefcase, HeartPulse, Camera, Coffee,
@@ -31,7 +31,7 @@ type Interest = {
 };
 
 const InterestsModal = ({ isOpen, onClose }: InterestsModalProps) => {
-  const { updateInterests } = usePulse();
+  const { updateInterests } = usePulseContext();
   
   const interests: Interest[] = [
     { id: 'academic', name: 'Academic', icon: <BookOpen className="h-4 w-4" />, color: 'bg-blue-500' },

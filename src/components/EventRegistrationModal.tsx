@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar, MapPin, Clock, Users } from "lucide-react";
-import { usePulse, LiveEvent } from '@/contexts/PulseContext';
+import { usePulseContext } from '@/contexts/PulseContext';
+
+// Type definition that matches the one in CampusPulse
+type LiveEvent = {
+  id: string;
+  title: string;
+  location: string;
+  time: string;
+  status: 'live' | 'soon' | 'upcoming';
+};
 
 type EventRegistrationModalProps = {
   event: LiveEvent;
@@ -21,7 +29,7 @@ type EventRegistrationModalProps = {
 };
 
 const EventRegistrationModal = ({ event, isOpen, onClose }: EventRegistrationModalProps) => {
-  const { joinEvent } = usePulse();
+  const { joinEvent } = usePulseContext();
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -1,13 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { usePulse } from '@/contexts/PulseContext';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { usePulseContext } from '@/contexts/PulseContext';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { User, Mail, Calendar, Camera, Settings, Bell, Shield, LogOut, MapPin, Users, Zap } from 'lucide-react';
+import { User, Mail, Calendar, Camera, Settings, Bell, Shield, LogOut, MapPin, Users, Zap, MessageSquare, BookOpen, Heart } from 'lucide-react';
 
 const Profile: React.FC = () => {
   const { user, logout } = useAuth();
-  const { liveEvents, activeSpaces, trendingTopics, totalOnline } = usePulse();
+  const { liveEvents, activeSpaces, trendingTopics, totalOnline } = usePulseContext();
 
   if (!user) {
     return (

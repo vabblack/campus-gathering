@@ -1,20 +1,25 @@
 export type UserRole = 'student' | 'organizer' | 'admin' | 'sponsor';
 
-export type EventCategory = 'All' | 'Academic' | 'Social' | 'Cultural' | 'Sports' | 'Career' | 'Workshop' | 'Concert' | 'conference' | 'workshop' | 'social' | 'academic' | 'sports' | 'cultural' | 'other';
+export type EventCategory = 'all' | 'academic' | 'social' | 'sports' | 'career' | 'arts';
 
 export interface Event {
-  id: string;
+  id: number;
   title: string;
-  description: string;
   date: string;
   time: string;
   location: string;
-  price: number;
   image: string;
-  category: EventCategory;
-  organizer: string;
-  ticketPrice: number;
+  description: string;
+  price?: string;
+  category: string;
   featured?: boolean;
 }
 
 export type ActiveSpace = 'study' | 'project' | 'club' | 'discussion';
+
+export type PulseContextType = {
+  activeTopics: string[];
+  setActiveTopics: (topics: string[]) => void;
+  activeSpace: ActiveSpace | null;
+  setActiveSpace: (space: ActiveSpace | null) => void;
+};

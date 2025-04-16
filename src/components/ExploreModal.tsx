@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { usePulse } from '@/contexts/PulseContext';
+import { usePulseContext } from '@/contexts/PulseContext';
 import { MapPin, Calendar, Users } from "lucide-react";
 
 type ExploreModalProps = {
@@ -17,7 +17,7 @@ type ExploreModalProps = {
 };
 
 const ExploreModal = ({ isOpen, onClose }: ExploreModalProps) => {
-  const { exploreEvents } = usePulse();
+  const { exploreEvents } = usePulseContext();
   
   const campusLocations = [
     { id: '1', name: 'LPU Main Block', events: 25, attendees: 500, color: 'bg-blue-500' },

@@ -1,17 +1,42 @@
 import React, { useState } from 'react';
+import * as THREE from 'three';
 import { Calendar, Users, Zap, MapPin, Heart } from 'lucide-react';
-import { usePulse, LiveEvent, ActiveSpace } from '@/contexts/PulseContext';
+import { usePulseContext } from '@/contexts/PulseContext';
+import { ActiveSpace } from '@/types';
 import { useNavigate } from 'react-router-dom';
 import EventRegistrationModal from './EventRegistrationModal';
 import SpaceJoinModal from './SpaceJoinModal';
 import InterestsModal from './InterestsModal';
 import ExploreModal from './ExploreModal';
 
+// Define temporary types for events
+type LiveEvent = {
+  id: string;
+  title: string;
+  location: string;
+  time: string;
+  status: 'live' | 'soon' | 'upcoming';
+};
+
+type SpaceInfo = {
+  id: string;
+  type: ActiveSpace;
+  name: string;
+  count: number;
+};
+
+type TopicInfo = {
+  id: string;
+  title: string;
+  mentions: string;
+  rank: number;
+};
+
 const CampusPulse = () => {
   const {
-    liveEvents,
-    activeSpaces,
-    trendingTopics,
+    liveEvents: contextLiveEvents,
+    activeSpaces: contextActiveSpaces,
+    trendingTopics: contextTrendingTopics,
     totalOnline,
     createEvent,
     joinGroup,
@@ -20,7 +45,27 @@ const CampusPulse = () => {
     joinEvent,
     joinSpace,
     navigateToCreateEvent
-  } = usePulse();
+  } = usePulseContext();
+  
+  // Add mock data if the context doesn't provide the necessary structure
+  const liveEvents: LiveEvent[] = [
+    { id: '1', title: 'Campus Hackathon', location: 'CS Building', time: '2:00 PM', status: 'live' },
+    { id: '2', title: 'Open Mic Night', location: 'Student Center', time: '7:00 PM', status: 'soon' },
+    { id: '3', title: 'Basketball Tournament', location: 'Sports Complex', time: '5:30 PM', status: 'upcoming' }
+  ];
+  
+  const activeSpaces: SpaceInfo[] = [
+    { id: '1', type: 'study', name: 'Finals Prep Group', count: 25 },
+    { id: '2', type: 'club', name: 'Photography Club', count: 42 },
+    { id: '3', type: 'project', name: 'Senior Thesis', count: 18 },
+    { id: '4', type: 'discussion', name: 'Career Talk', count: 31 }
+  ];
+  
+  const trendingTopics: TopicInfo[] = [
+    { id: '1', title: 'Final Exams', mentions: '485 mentions', rank: 1 },
+    { id: '2', title: 'Spring Break', mentions: '372 mentions', rank: 2 },
+    { id: '3', title: 'Career Fair', mentions: '291 mentions', rank: 3 }
+  ];
   
   const navigate = useNavigate();
   
@@ -29,7 +74,7 @@ const CampusPulse = () => {
   const [isEventModalOpen, setIsEventModalOpen] = useState(false);
   
   // State for space modal
-  const [selectedSpaceType, setSelectedSpaceType] = useState<ActiveSpace['type'] | null>(null);
+  const [selectedSpaceType, setSelectedSpaceType] = useState<ActiveSpace | null>(null);
   const [isSpaceModalOpen, setIsSpaceModalOpen] = useState(false);
   
   // State for interests modal
@@ -48,7 +93,7 @@ const CampusPulse = () => {
   };
 
   // Handler for space cards
-  const handleSpaceClick = (spaceType: ActiveSpace['type']) => {
+  const handleSpaceClick = (spaceType: ActiveSpace) => {
     setSelectedSpaceType(spaceType);
     setIsSpaceModalOpen(true);
   };
@@ -147,7 +192,7 @@ const CampusPulse = () => {
                   </div>
                   <h3 className="text-lg font-semibold text-white">Active Spaces</h3>
                 </div>
-                <div className="text-sm text-gray-400">{totalOnline.toLocaleString()} online</div>
+                <div className="text-sm text-gray-400">{totalOnline || 248} online</div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">

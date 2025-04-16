@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CheckIcon, UserCircle, Clock } from "lucide-react";
-import { usePulse, ActiveSpace } from '@/contexts/PulseContext';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Users, BookOpen, Code, MessageSquare } from "lucide-react";
+import { usePulseContext } from '@/contexts/PulseContext';
+import { ActiveSpace } from '@/types';
 
 type SpaceJoinModalProps = {
-  spaceType: ActiveSpace['type'];
+  spaceType: ActiveSpace;
   isOpen: boolean;
   onClose: () => void;
 };
@@ -28,7 +29,7 @@ const typeLabels = {
 };
 
 const SpaceJoinModal = ({ spaceType, isOpen, onClose }: SpaceJoinModalProps) => {
-  const { joinSpace } = usePulse();
+  const { joinSpace } = usePulseContext();
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,7 +85,7 @@ const SpaceJoinModal = ({ spaceType, isOpen, onClose }: SpaceJoinModalProps) => 
           </div>
           
           <div className="flex items-start space-x-2 text-sm text-gray-300 mt-4">
-            <UserCircle className="h-4 w-4 text-purple-400 mt-0.5" />
+            <Users className="h-4 w-4 text-purple-400 mt-0.5" />
             <div>
               <p className="font-medium text-white">Active participants</p>
               <div className="flex -space-x-2 mt-1">
@@ -98,7 +99,7 @@ const SpaceJoinModal = ({ spaceType, isOpen, onClose }: SpaceJoinModalProps) => 
           </div>
           
           <div className="flex items-center space-x-2 text-sm text-gray-300">
-            <Clock className="h-4 w-4 text-purple-400" />
+            <BookOpen className="h-4 w-4 text-purple-400" />
             <span>Next session: Today, 4:00 PM</span>
           </div>
         </div>
