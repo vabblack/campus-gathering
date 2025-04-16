@@ -1,20 +1,32 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { toast } from 'sonner';
-import { ActiveSpace, PulseContextType } from '@/types';
+import { ActiveSpace, PulseContextType, TopicType } from '@/types';
 
-// Types for our pulse data
-type SpaceInfo = {
+// Define local space info interface to avoid type conflict
+interface SpaceInfo {
   id: string;
-  type: ActiveSpace;
-  name: string;
-};
+  title: string;
+  type?: string;
+  participants: number;
+  count?: number;
+  location?: string;
+  name?: string;
+}
 
-const defaultPulseContext: PulseContextType & {
-  activeSpaces: SpaceInfo[];
-  addSpace: (type: ActiveSpace, name: string) => void;
-  removeSpace: (id: string) => void;
-  liveEvents: { id: string; title: string; participants: number }[];
-  trendingTopics: { id: string; name: string; engagement: number }[];
+interface PulseProviderProps {
+  children: React.ReactNode;
+}
+
+// Extended context type to include campus pulse data
+interface ExtendedPulseContextType extends PulseContextType {
+  liveEvents: SpaceInfo[];
+  activeSpaces: {
+    id: string;
+    type: string;
+    count: number;
+    name?: string;
+  }[];
+  trendingTopics: TopicType[];
   totalOnline: number;
   createEvent: () => void;
   joinGroup: () => void;
@@ -23,15 +35,17 @@ const defaultPulseContext: PulseContextType & {
   joinEvent: (eventId: string) => void;
   joinSpace: (spaceType: ActiveSpace) => void;
   navigateToCreateEvent: (navigate: any) => void;
-} = {
+  addSpace: (type: ActiveSpace, name: string) => void;
+  removeSpace: (id: string) => void;
+}
+
+const defaultContext: ExtendedPulseContextType = {
   activeTopics: [],
   setActiveTopics: () => {},
   activeSpace: null,
   setActiveSpace: () => {},
-  activeSpaces: [],
-  addSpace: () => {},
-  removeSpace: () => {},
   liveEvents: [],
+  activeSpaces: [],
   trendingTopics: [],
   totalOnline: 0,
   createEvent: () => {},
@@ -41,110 +55,107 @@ const defaultPulseContext: PulseContextType & {
   joinEvent: () => {},
   joinSpace: () => {},
   navigateToCreateEvent: () => {},
+  addSpace: () => {},
+  removeSpace: () => {}
 };
 
-export const PulseContext = createContext(defaultPulseContext);
-
-export const usePulseContext = () => useContext(PulseContext);
-
-interface PulseProviderProps {
-  children: ReactNode;
-}
+const PulseContext = createContext<ExtendedPulseContextType>(defaultContext);
 
 export const PulseProvider: React.FC<PulseProviderProps> = ({ children }) => {
   const [activeTopics, setActiveTopics] = useState<string[]>([]);
   const [activeSpace, setActiveSpace] = useState<ActiveSpace | null>(null);
-  const [activeSpaces, setActiveSpaces] = useState<SpaceInfo[]>([
-    { id: '1', type: 'study', name: 'Finals Prep Group' },
-    { id: '2', type: 'club', name: 'Photography Club' },
+  const [activeSpacesState, setActiveSpacesState] = useState([
+    { id: '1', type: 'study', count: 23, name: 'Finals Prep Group' },
+    { id: '2', type: 'project', count: 15, name: 'App Development' },
+    { id: '3', type: 'club', count: 8, name: 'Photography Club' }
   ]);
-
-  const [liveEvents, setLiveEvents] = useState([
-    { id: '1', title: 'Campus Hackathon', participants: 42 },
-    { id: '2', title: 'Open Mic Night', participants: 28 },
-    { id: '3', title: 'Basketball Tournament', participants: 35 },
-  ]);
-
-  const [trendingTopics, setTrendingTopics] = useState([
-    { id: '1', name: 'Final Exams', engagement: 85 },
-    { id: '2', name: 'Spring Break', engagement: 73 },
-    { id: '3', name: 'Career Fair', engagement: 68 },
-    { id: '4', name: 'Campus Food', engagement: 54 },
-    { id: '5', name: 'Dorm Life', engagement: 47 },
-  ]);
-
-  const totalOnline = 248; // Static number for demo
+  
+  // Mock data for campus pulse
+  const liveEvents: SpaceInfo[] = [
+    { id: '1', title: 'Tech Conference', participants: 120, location: 'Main Auditorium' },
+    { id: '2', title: 'Career Fair', participants: 200, location: 'Student Center' },
+    { id: '3', title: 'AI Workshop', participants: 50, location: 'Tech Lab 101' }
+  ];
+  
+  const trendingTopics: TopicType[] = [
+    { id: '1', name: 'AI Research', title: 'AI Research', engagement: 87, mentions: 120 },
+    { id: '2', name: 'Startup Weekend', title: 'Startup Weekend', engagement: 65, mentions: 95 },
+    { id: '3', name: 'Campus Sports', title: 'Campus Sports', engagement: 42, mentions: 78 }
+  ];
+  
+  const totalOnline = 1243;
 
   const addSpace = (type: ActiveSpace, name: string) => {
     const newSpace = {
-      id: Date.now().toString(),
+      id: Math.random().toString(36).substring(2, 9),
       type,
       name,
+      count: Math.floor(Math.random() * 30) + 5
     };
-    setActiveSpaces([...activeSpaces, newSpace]);
+    
+    setActiveSpacesState([...activeSpacesState, newSpace]);
     toast.success(`Joined ${type} space: ${name}`);
   };
-
+  
   const removeSpace = (id: string) => {
-    setActiveSpaces(activeSpaces.filter(space => space.id !== id));
-    toast.info('Left the space');
+    setActiveSpacesState(activeSpacesState.filter(space => space.id !== id));
+    toast.success("Left the space");
   };
-
-  // Modal handlers
+  
+  // Mock functionality for UI interactions
   const createEvent = () => {
-    toast.success('Event creation started!');
+    toast.success("Event created successfully!");
   };
-
+  
   const joinGroup = () => {
-    toast.success('Group joined successfully!');
+    toast.success("Joined group successfully!");
   };
-
+  
   const updateInterests = () => {
-    toast.success('Interests updated!');
+    toast.success("Interests updated successfully!");
   };
-
+  
   const exploreEvents = () => {
-    toast.info('Exploring events...');
+    toast.success("Explore mode activated!");
   };
-
+  
   const joinEvent = (eventId: string) => {
-    toast.success('Successfully registered for the event!');
+    toast.success(`Registered for event #${eventId}!`);
   };
-
+  
   const joinSpace = (spaceType: ActiveSpace) => {
-    setActiveSpace(spaceType);
     toast.success(`Joined ${spaceType} space!`);
   };
-
+  
   const navigateToCreateEvent = (navigate: any) => {
     navigate('/create-event');
   };
 
   return (
-    <PulseContext.Provider
-      value={{
-        activeTopics,
-        setActiveTopics,
-        activeSpace,
-        setActiveSpace,
-        activeSpaces,
-        addSpace,
-        removeSpace,
-        liveEvents,
-        trendingTopics,
-        totalOnline,
-        createEvent,
-        joinGroup,
-        updateInterests,
-        exploreEvents,
-        joinEvent,
-        joinSpace,
-        navigateToCreateEvent,
-      }}
-    >
+    <PulseContext.Provider value={{
+      activeTopics,
+      setActiveTopics,
+      activeSpace,
+      setActiveSpace,
+      liveEvents,
+      activeSpaces: activeSpacesState,
+      trendingTopics,
+      totalOnline,
+      createEvent,
+      joinGroup,
+      updateInterests,
+      exploreEvents,
+      joinEvent,
+      joinSpace,
+      navigateToCreateEvent,
+      addSpace,
+      removeSpace
+    }}>
       {children}
     </PulseContext.Provider>
   );
 };
 
-export default PulseContext; 
+export const usePulseContext = () => useContext(PulseContext);
+
+export default PulseProvider; 

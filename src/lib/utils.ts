@@ -14,9 +14,15 @@ export function formatDate(date: string | Date): string {
   });
 }
 
-export function formatCurrency(amount: number): string {
+export function formatCurrency(amount: number | undefined): string {
+  if (amount === undefined) return "$0.00";
+  
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   }).format(amount);
+}
+
+export function truncate(str: string, length: number): string {
+  return str.length > length ? `${str.substring(0, length)}...` : str;
 }

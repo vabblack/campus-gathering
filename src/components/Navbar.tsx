@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from '../contexts/AuthContext';
+import { SearchResult } from "@/types";
 
 // Add the shine animation styles
 const shineStyles = `
@@ -54,7 +55,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [notifications, setNotifications] = useState([
     { id: 1, title: 'New Event', message: 'A new event has been created in your area', time: '5m ago' },
     { id: 2, title: 'Event Reminder', message: 'Your event "Campus Meetup" starts in 1 hour', time: '1h ago' },
@@ -89,7 +90,7 @@ const Navbar = () => {
     }
   };
 
-  const handleSearchResultClick = (result: any) => {
+  const handleSearchResultClick = (result: SearchResult) => {
     navigate(`/events/${result.id}`);
     setSearchQuery('');
     setSearchResults([]);

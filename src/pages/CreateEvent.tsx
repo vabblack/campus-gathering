@@ -23,7 +23,7 @@ const CreateEvent: React.FC = () => {
   });
   const [image, setImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
-  const [formErrors, setFormErrors] = useState<Partial<Record<keyof typeof formData | 'image', string>>>({});
+  const [formErrors, setFormErrors] = useState<Partial<Record<'time' | 'title' | 'image' | 'location' | 'date' | 'description' | 'category' | 'featured' | 'price' | 'submit', string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (

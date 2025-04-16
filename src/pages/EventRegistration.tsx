@@ -48,7 +48,7 @@ const EventRegistration = () => {
       await new Promise(resolve => setTimeout(resolve, 1500));
 
       // Generate UPI payment details
-      const amount = event!.ticketPrice * formData.numberOfTickets;
+      const amount = (event?.ticketPrice || 0) * formData.numberOfTickets;
       const upiDetails = {
         upiId: "campusgathering@upi", // Fixed merchant UPI ID
         name: "Campus Gathering Grid", // Merchant name
@@ -215,7 +215,7 @@ const EventRegistration = () => {
                 <p>Number of Tickets: {formData.numberOfTickets}</p>
                 <p>Price per Ticket: {formatCurrency(event.ticketPrice)}</p>
                 <p className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-400">
-                  Total Amount: {formatCurrency(event.ticketPrice * formData.numberOfTickets)}
+                  Total Amount: {formatCurrency((event?.ticketPrice || 0) * formData.numberOfTickets)}
                 </p>
               </div>
             </div>

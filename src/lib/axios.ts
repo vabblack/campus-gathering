@@ -1,17 +1,17 @@
 import axios from 'axios';
 import { env } from '@/config/env';
 
-const api = axios.create({
-  baseURL: env.apiUrl,
+export const axiosInstance = axios.create({
+  baseURL: env.API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Add a request interceptor to add auth token
-api.interceptors.request.use(
+// Add a request interceptor to include the auth token in all requests
+axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(env.AUTH_TOKEN_KEY);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -23,17 +23,21 @@ api.interceptors.request.use(
 );
 
 // Add a response interceptor to handle errors
-api.interceptors.response.use(
-  (response) => response,
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
   (error) => {
-    if (error.response?.status === 401) {
-      // Handle unauthorized access
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/signin';
+    // Handle specific error scenarios
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      if (error.response.status === 401) {
+        // Token expired or invalid, potentially log the user out
+        localStorage.removeItem(env.AUTH_TOKEN_KEY);
+        // Redirect to login or show a message
+      }
     }
     return Promise.reject(error);
   }
-);
-
-export default api; 
+); 

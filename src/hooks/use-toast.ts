@@ -1,4 +1,4 @@
-import * as React from "react"
+import { useState, useEffect, createContext, useContext } from "react";
 
 import type {
   ToastActionElement,
@@ -155,7 +155,7 @@ function toast({ ...props }: Toast) {
       ...props,
       id,
       open: true,
-      onOpenChange: (open) => {
+      onOpenChange: (open: any) => {
         if (!open) dismiss()
       },
     },
@@ -169,9 +169,9 @@ function toast({ ...props }: Toast) {
 }
 
 function useToast() {
-  const [state, setState] = React.useState<State>(memoryState)
+  const [state, setState] = useState<State>(memoryState)
 
-  React.useEffect(() => {
+  useEffect(() => {
     listeners.push(setState)
     return () => {
       const index = listeners.indexOf(setState)
@@ -189,3 +189,4 @@ function useToast() {
 }
 
 export { toast, useToast }
+export type { ToastProps, ToastActionElement }

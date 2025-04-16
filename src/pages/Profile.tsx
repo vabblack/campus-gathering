@@ -128,10 +128,10 @@ const Profile: React.FC = () => {
                   <div className="space-y-3">
                     {liveEvents.map((event) => (
                       <div key={event.id} className="p-3 rounded-lg bg-gray-800/40 backdrop-blur-sm">
-                        <p className="text-sm font-medium text-gray-200">{event.title}</p>
+                        <p className="text-sm font-medium text-gray-200">{event.title || 'Untitled Event'}</p>
                         <div className="flex items-center space-x-2 mt-1 text-xs text-gray-400">
                           <MapPin className="h-3 w-3" />
-                          <span>{event.location}</span>
+                          <span>{event.location || 'Unknown Location'}</span>
                         </div>
                       </div>
                     ))}
@@ -151,7 +151,7 @@ const Profile: React.FC = () => {
                           {space.type.charAt(0).toUpperCase() + space.type.slice(1)} Group
                         </p>
                         <p className="text-xs text-gray-400 mt-1">
-                          {space.count} active members
+                          {space.count || 0} active members
                         </p>
                       </div>
                     ))}
@@ -167,8 +167,8 @@ const Profile: React.FC = () => {
                   <div className="space-y-3">
                     {trendingTopics.map((topic) => (
                       <div key={topic.id} className="p-3 rounded-lg bg-gray-800/40 backdrop-blur-sm">
-                        <p className="text-sm font-medium text-gray-200">{topic.title}</p>
-                        <p className="text-xs text-gray-400 mt-1">{topic.mentions}</p>
+                        <p className="text-sm font-medium text-gray-200">{topic.title || topic.name}</p>
+                        <p className="text-xs text-gray-400 mt-1">{topic.mentions || topic.engagement} interactions</p>
                       </div>
                     ))}
                   </div>

@@ -3,7 +3,7 @@ import { Calendar, Users, Zap, MapPin, Heart, Trophy, Target, Sparkles, BookOpen
 import Footer from '../components/Footer';
 
 const HomePage = () => {
-  const navigateTo = (path) => {
+  const navigateTo = (path: string) => {
     window.location.href = path;
   };
 
