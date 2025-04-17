@@ -135,18 +135,18 @@ const CampusPulse = () => {
           <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto"></div>
         </div>
 
-        {/* Live Activity Cards */}
+        {/* Live Activity Cards - Adjusted for better mobile layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {/* Upcoming Events Card */}
           <div className="glass-card relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                    <Calendar className="w-5 h-5 text-white" />
+            <div className="p-4 sm:p-6">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                    <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-white">Live Events</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-white">Live Events</h3>
                 </div>
                 <span className="animate-pulse flex h-3 w-3">
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500">
@@ -155,19 +155,19 @@ const CampusPulse = () => {
                 </span>
               </div>
               
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {liveEvents.map((event) => (
                   <div
                     key={event.id}
                     onClick={() => handleEventClick(event.id)}
-                    className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+                    className="flex items-center justify-between p-2 sm:p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
                   >
                     <div>
-                      <p className="text-white font-medium">{event.title}</p>
-                      <p className="text-sm text-gray-400">{event.location} • {event.time}</p>
+                      <p className="text-sm sm:text-base text-white font-medium">{event.title}</p>
+                      <p className="text-xs sm:text-sm text-gray-400">{event.location} • {event.time}</p>
                     </div>
                     <span className={`
-                      px-2 py-1 rounded-full text-xs font-medium 
+                      px-2 py-0.5 sm:py-1 rounded-full text-xs font-medium 
                       ${event.status === 'live' ? 'bg-green-500/20 text-green-400' : ''}
                       ${event.status === 'soon' ? 'bg-yellow-500/20 text-yellow-400' : ''}
                       ${event.status === 'upcoming' ? 'bg-blue-500/20 text-blue-400' : ''}
@@ -184,26 +184,26 @@ const CampusPulse = () => {
           {/* Active Spaces Card */}
           <div className="glass-card relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></div>
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                    <Users className="w-5 h-5 text-white" />
+            <div className="p-4 sm:p-6">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                    <Users className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-white">Active Spaces</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-white">Active Spaces</h3>
                 </div>
-                <div className="text-sm text-gray-400">{totalOnline || 248} online</div>
+                <div className="text-xs sm:text-sm text-gray-400">{totalOnline || 248} online</div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-2 sm:gap-4">
                 {activeSpaces.map((space) => (
                   <div
                     key={space.id}
                     onClick={() => handleSpaceClick(space.type)}
-                    className="p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-center cursor-pointer"
+                    className="p-3 sm:p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-center cursor-pointer"
                   >
-                    <div className="text-2xl font-bold text-white mb-1">{space.count}</div>
-                    <p className="text-sm text-gray-400">
+                    <div className="text-xl sm:text-2xl font-bold text-white mb-1">{space.count}</div>
+                    <p className="text-xs sm:text-sm text-gray-400">
                       {space.type === 'study' ? 'Study Groups' : 
                        space.type === 'project' ? 'Project Teams' : 
                        space.type === 'club' ? 'Club Meetings' : 
@@ -218,28 +218,28 @@ const CampusPulse = () => {
           {/* Trending Topics Card */}
           <div className="glass-card relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-red-500"></div>
-            <div className="p-6">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-white" />
+            <div className="p-4 sm:p-6">
+              <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
+                  <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold text-white">Trending Now</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-white">Trending Now</h3>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {trendingTopics.map((topic) => (
                   <div
                     key={topic.id}
-                    className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+                    className="flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
                   >
-                    <span className={`text-2xl font-bold ${
+                    <span className={`text-xl sm:text-2xl font-bold ${
                       topic.rank === 1 ? 'text-orange-500' :
                       topic.rank === 2 ? 'text-orange-400' :
                       'text-orange-300'
                     }`}>#{topic.rank}</span>
                     <div>
-                      <p className="text-white font-medium">{topic.title}</p>
-                      <p className="text-sm text-gray-400">{topic.mentions}</p>
+                      <p className="text-sm sm:text-base text-white font-medium">{topic.title}</p>
+                      <p className="text-xs sm:text-sm text-gray-400">{topic.mentions}</p>
                     </div>
                   </div>
                 ))}
