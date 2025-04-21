@@ -160,7 +160,7 @@ const About = () => {
                   {
                     name: "Vaibhav",
                     role: "Head of Operations",
-                    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
+                    image: "https://cdn-icons-png.flaticon.com/512/6596/6596121.png",
                     socialLinks: {
                       linkedin: "https://linkedin.com/in/vaibhav",
                       twitter: "https://twitter.com/vaibhav",
@@ -170,7 +170,7 @@ const About = () => {
                   {
                     name: "Yash",
                     role: "Technical Lead",
-                    image: "https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    image: "https://cdn-icons-png.flaticon.com/512/6596/6596121.png",
                     socialLinks: {
                       linkedin: "https://linkedin.com/in/yash",
                       github: "https://github.com/yash",
