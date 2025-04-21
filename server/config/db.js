@@ -2,20 +2,18 @@ const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
-// Promise-based connection
-console.log("Connecting to MongoDB...");
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+// Cached connection for serverless environment
+let cachedConnection = null;
 
-// Original async/await connection function (kept for reference)
 const connectDB = async () => {
+  // If connection exists, reuse it
+  if (cachedConnection) {
+    console.log('Using existing MongoDB connection');
+    return cachedConnection;
+  }
+
   try {
     // Debug logs
-    console.log('Current directory:', __dirname);
     console.log('Environment variables:', process.env.MONGO_URI ? 'MONGO_URI exists' : 'MONGO_URI missing');
     
     // Try to use env var, otherwise use hardcoded connection string as fallback
@@ -27,11 +25,20 @@ const connectDB = async () => {
     const conn = await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000, // Timeout after 5s
+      connectTimeoutMS: 10000, // Give up initial connection after 10s
     });
+    
     console.log(`MongoDB Connected: ${conn.connection.host}`);
+    cachedConnection = conn;
+    return conn;
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
+    console.error(`MongoDB Connection Error: ${error.message}`);
+    // Don't exit in serverless environment
+    if (process.env.NODE_ENV !== 'production') {
+      process.exit(1);
+    }
+    throw error;
   }
 };
 
