@@ -1,4 +1,3 @@
-
 # Campus Gathering Grid
 
 A web application for university events management, built with HTML, CSS (Tailwind), JavaScript, and PHP.
@@ -65,3 +64,21 @@ campus-gathering-grid/
 ## License
 
 This project is created for educational purposes as a university assignment.
+
+## Vercel Deployment
+
+To make the backend services (MongoDB and other APIs) work on Vercel:
+
+1. In your Vercel dashboard, go to your project settings
+2. Navigate to the "Environment Variables" section
+3. Add the following environment variables:
+   - `MONGO_URI` = `mongodb+srv://vabblack:vaibhav23@campus-gathering.zg7neut.mongodb.net/?retryWrites=true&w=majority&appName=Campus-gathering`
+   - `FRONTEND_URL` = `https://campus-gathering.vercel.app` (replace with your actual Vercel domain)
+   - `JWT_SECRET` = `your-secure-jwt-secret-key` (use a strong, random string)
+   
+4. Also add the frontend environment variable:
+   - `VITE_API_URL` = `/api` (this configures your React app to use the Vercel API routes)
+   
+5. Redeploy your application after setting these variables
+
+Your MongoDB backend should now be properly connected to your Vercel deployment.

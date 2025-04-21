@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import { env } from '@/config/env';
 
 interface User {
   id: string;
@@ -50,7 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Memoize functions to prevent unnecessary re-renders
   const login = useCallback(async (email: string, password: string) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${env.API_URL}/auth/login`, {
         email,
         password
       });
@@ -77,7 +78,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const register = useCallback(async (name: string, email: string, password: string): Promise<string> => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post(`${env.API_URL}/auth/register`, {
         name,
         email,
         password
@@ -90,7 +91,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const verifyOTP = useCallback(async (userId: string, otp: string) => {
     try {
-      await axios.post('http://localhost:5000/api/auth/verify-otp', {
+      await axios.post(`${env.API_URL}/auth/verify-otp`, {
         userId,
         otp
       });
@@ -101,7 +102,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const resendOTP = useCallback(async (userId: string) => {
     try {
-      await axios.post('http://localhost:5000/api/auth/resend-otp', {
+      await axios.post(`${env.API_URL}/auth/resend-otp`, {
         userId
       });
     } catch (error: any) {

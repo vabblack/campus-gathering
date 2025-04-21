@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { env } from '@/config/env';
 
 interface User {
   _id: string;
@@ -17,7 +18,7 @@ const AdminUsers: React.FC = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/auth/users');
+        const response = await axios.get(`${env.API_URL}/auth/users`);
         setUsers(response.data);
       } catch (err: any) {
         setError(err.response?.data?.message || 'Failed to fetch users');

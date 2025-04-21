@@ -16,7 +16,8 @@
     "test:coverage": "vitest run --coverage",
     "type-check": "tsc --noEmit || exit 0",
     "prepare": "husky install",
-    "postinstall": "npm run type-check || exit 0"
+    "postinstall": "npm run type-check || exit 0",
+    "vercel-build": "npm run build && cd server && npm install"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
