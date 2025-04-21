@@ -75,9 +75,11 @@ To make the backend services (MongoDB and other APIs) work on Vercel:
    - `MONGO_URI` = `mongodb+srv://vabblack:vaibhav23@campus-gathering.zg7neut.mongodb.net/?retryWrites=true&w=majority&appName=Campus-gathering`
    - `FRONTEND_URL` = `https://campus-gathering.vercel.app` (replace with your actual Vercel domain)
    - `JWT_SECRET` = `your-secure-jwt-secret-key` (use a strong, random string)
+   - `EMAIL_USER` = Your Gmail address
+   - `EMAIL_PASS` = Your Gmail app password (generated in Google account security settings)
    
 4. Also add the frontend environment variable:
-   - `VITE_API_URL` = `/api` (this configures your React app to use the Vercel API routes)
+   - `VITE_API_URL` = `/api/auth` (this configures your React app to use the correct Vercel API routes)
    
 5. Redeploy your application after setting these variables
 
