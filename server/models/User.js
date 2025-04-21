@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -80,5 +80,4 @@ userSchema.methods.verifyOTP = async function(candidateOTP) {
   return this.otp === candidateOTP;
 };
 
-const User = mongoose.model('User', userSchema);
-export default User;
+module.exports = mongoose.model('User', userSchema);

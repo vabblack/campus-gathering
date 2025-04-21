@@ -1,7 +1,6 @@
-import express from 'express';
-import Event from '../models/Event.js';
-
+const express = require('express');
 const router = express.Router();
+const Event = require('../models/Event');
 
 // @route   GET /api/events
 // @desc    Get all events
@@ -38,4 +37,4 @@ router.post('/', async (req, res) => {
   }
 });
 
-export default router; 
+module.exports = router; 

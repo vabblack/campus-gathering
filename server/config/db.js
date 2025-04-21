@@ -1,13 +1,6 @@
-import mongoose from 'mongoose';
-import path from 'path';
-import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
-
-// Get current directory name (ES module equivalent of __dirname)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
+const mongoose = require('mongoose');
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 // Cached connection for serverless environment
 let cachedConnection = null;
@@ -49,4 +42,4 @@ const connectDB = async () => {
   }
 };
 
-export default connectDB; 
+module.exports = connectDB; 

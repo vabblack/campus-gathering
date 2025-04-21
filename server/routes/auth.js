@@ -1,11 +1,10 @@
-import express from 'express';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
-import User from '../models/User.js';
-import crypto from 'crypto';
-
+const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+const User = require('../models/User');
+const crypto = require('crypto');
 
 // Email transporter
 const transporter = nodemailer.createTransport({
@@ -242,4 +241,4 @@ router.get('/users', async (req, res) => {
   }
 });
 
-export default router; 
+module.exports = router; 

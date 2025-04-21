@@ -1,4 +1,4 @@
 // This file redirects all API requests to our Express app
-import app from '../server/server.js';
+const app = require('../server/server');
 
-export default app; 
+module.exports = app; 

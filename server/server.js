@@ -1,14 +1,9 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import connectDB from './config/db.js';
-
-// Get current directory name (ES module equivalent of __dirname)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const path = require('path');
+const connectDB = require('./config/db');
 
 // Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '.env') });
@@ -32,8 +27,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes - move to root path for serverless functions
-app.use('/api/auth', (await import('./routes/auth.js')).default);
-app.use('/api/events', (await import('./routes/events.js')).default);
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/events', require('./routes/events'));
 
 // Add a healthcheck endpoint
 app.get('/api/healthcheck', (req, res) => {
@@ -63,4 +58,4 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Export for serverless use
-export default app; 
+module.exports = app; 
