@@ -14,7 +14,7 @@ const VerifyEmail: React.FC = () => {
   useEffect(() => {
     const verifyEmail = async () => {
       try {
-        const response = await axios.get(`${env.API_URL}/auth/verify-email/${token}`);
+        const response = await axios.get(`${env.API_URL}/verify-email/${token}`);
         setStatus('success');
         setMessage(response.data.message);
         

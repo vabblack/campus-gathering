@@ -70,7 +70,7 @@ const SignIn: React.FC = () => {
   const handleResendVerification = async () => {
     try {
       setIsLoading(true);
-      await axios.post(`${env.API_URL}/auth/resend-verification`, {
+      await axios.post(`${env.API_URL}/resend-verification`, {
         email: formData.email
       });
       setError('Verification email sent. Please check your inbox.');
