@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
+import { env } from '@/config/env';
 
 const VerifyEmail: React.FC = () => {
   const { token } = useParams<{ token: string }>();
@@ -13,7 +14,7 @@ const VerifyEmail: React.FC = () => {
   useEffect(() => {
     const verifyEmail = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/auth/verify-email/${token}`);
+        const response = await axios.get(`${env.API_URL}/auth/verify-email/${token}`);
         setStatus('success');
         setMessage(response.data.message);
         

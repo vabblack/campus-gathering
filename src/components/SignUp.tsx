@@ -5,8 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Mail, Lock, User, Loader2, Eye, EyeOff, Facebook, Twitter, Github } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { env } from '@/config/env';
 
-const API_URL = 'http://localhost:5000/api/auth';
+const API_URL = env.API_URL;
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();

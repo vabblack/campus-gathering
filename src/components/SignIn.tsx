@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Mail, Lock, Loader2, Eye, EyeOff, Facebook, Twitter, Github } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
+import { env } from '@/config/env';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ const SignIn: React.FC = () => {
   const handleResendVerification = async () => {
     try {
       setIsLoading(true);
-      await axios.post('http://localhost:5000/api/auth/resend-verification', {
+      await axios.post(`${env.API_URL}/auth/resend-verification`, {
         email: formData.email
       });
       setError('Verification email sent. Please check your inbox.');
